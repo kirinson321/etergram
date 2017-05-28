@@ -6,4 +6,7 @@ urlpatterns = [
     #home page
     url(r'^$', views.index, name='index'),
 
+    #show all tags
+    url(r'^tags/', views.tags, name='tags'),
+    
 ]

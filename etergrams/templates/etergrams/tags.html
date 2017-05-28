@@ -1,0 +1,14 @@
+{% extends "etergrams/base.html" %}
+
+{%block content%}
+
+<p>Tags</p>
+<ul>
+    {% for tag in tags %}
+        <li>{{tag}}</li>
+    {% empty %}
+        <li>No tags added yet</li>
+    {% endfor %}
+</ul> 
+
+{%endblock content%}
