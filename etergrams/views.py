@@ -14,3 +14,11 @@ def tags(request):
     tags = Tag.objects.order_by('date_added')
     context = {'tags': tags}
     return render(request, 'etergrams/tags.html', context)
+
+
+def tag(request, tag_id):
+    """show all entries for a single tag"""
+    tag = Tag.objects.get(id=tag_id)
+    entries = tag.entry_set.all()#('-date_added')
+    context = {'tag': tag, 'entries': entries}
+    return render(request, 'etergrams/tag.html', context)

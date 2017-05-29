@@ -2,11 +2,16 @@
 from django.conf.urls import url
 from . import views
 
+
 urlpatterns = [
     #home page
     url(r'^$', views.index, name='index'),
 
-    #show all tags
-    url(r'^tags/', views.tags, name='tags'),
-    
+    #page with all tags
+    url(r'^tags/$', views.tags, name='tags'),
+
+    #page with all entries for a specific tag
+    url(r'^tags/(?P<tag_id>\d+)/$', views.tag, name='tag'),
+
+
 ]

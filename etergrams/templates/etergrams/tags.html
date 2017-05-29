@@ -5,10 +5,12 @@
 <p>Tags</p>
 <ul>
     {% for tag in tags %}
-        <li>{{tag}}</li>
+        <li>
+            <a href="{% url 'etergrams:tag' tag.id %}">{{tag}}</a>
+        </li>
     {% empty %}
         <li>No tags added yet</li>
     {% endfor %}
-</ul> 
+</ul>
 
 {%endblock content%}
