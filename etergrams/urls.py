@@ -13,5 +13,7 @@ urlpatterns = [
     #page with all entries for a specific tag
     url(r'^tags/(?P<tag_id>\d+)/$', views.tag, name='tag'),
 
+    #page for adding a new tag
+    url(r'^new_tag/$', views.new_tag, name='new_tag'),
 
 ]
