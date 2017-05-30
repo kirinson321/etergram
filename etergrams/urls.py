@@ -16,4 +16,7 @@ urlpatterns = [
     #page for adding a new tag
     url(r'^new_tag/$', views.new_tag, name='new_tag'),
 
+    #page for adding new entries
+    url(r'^new_entry/(?P<tag_id>\d+)/$', views.new_entry, name='new_entry'),
+
 ]

@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 
 from .models import Tag
 from .forms import TagForm
+from .forms import EntryForm
 
 # Create your views here.
 
@@ -39,3 +40,23 @@ def new_tag(request):
 
     context = {'form': form}
     return render(request, 'etergrams/new_tag.html', context)
+
+
+def new_entry(request, tag_id):
+    """add a new entry to a particular tag"""
+    tag = Tag.objects.get(id=tag_id)
+
+    if request.method != 'POST':
+        form = EntryForm()
+    else:
+        form = EntryForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_entry = form.save(commit=False)
+            new_entry.tag = tag
+            #m = ExampleModel.objects.get(pk=course_id)
+            new_entry.model_pic = form.cleaned_data['image']
+            new_entry.save()
+            return HttpResponseRedirect(reverse('etergrams:tag', args=[tag_id]))
+
+    context = {'tag': tag, 'form': form}
+    return render(request, 'etergrams/new_entry.html', context)

@@ -1,0 +1,21 @@
+{% extends "etergrams/base.html" %}
+
+    {% block content %}
+
+    <p><a href="{% url 'etergrams:tag' tag.id %}">{{ tag }}</a></p>
+
+    <p>Add a new entry:</p>
+    <form action="{% url 'etergrams:new_entry' tag.id %}" method='post' enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><input id="id_image" type="file" class="" name="image"></p>
+        <button name='submit'>add entry</button>
+    </form>
+
+<!--
+    <form action="{% url 'etergrams:new_entry' tag.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+-->
+
+    {% endblock content %}
