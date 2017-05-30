@@ -1,9 +1,15 @@
 from django.shortcuts import render
+from django.conf import settings
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from django.core.files.storage import FileSystemStorage
+
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 from .models import Tag
 from .forms import TagForm
+from .models import Entry
 from .forms import EntryForm
 
 # Create your views here.
@@ -54,7 +60,7 @@ def new_entry(request, tag_id):
             new_entry = form.save(commit=False)
             new_entry.tag = tag
             #m = ExampleModel.objects.get(pk=course_id)
-            new_entry.model_pic = form.cleaned_data['image']
+            #new_entry.model_pic = form.cleaned_data['image']
             new_entry.save()
             return HttpResponseRedirect(reverse('etergrams:tag', args=[tag_id]))
 

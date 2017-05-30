@@ -1,6 +1,8 @@
 """defining url patterns for etergrams application"""
 from django.conf.urls import url
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -19,4 +21,7 @@ urlpatterns = [
     #page for adding new entries
     url(r'^new_entry/(?P<tag_id>\d+)/$', views.new_entry, name='new_entry'),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+#if settings.DEBUG:
+#    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
