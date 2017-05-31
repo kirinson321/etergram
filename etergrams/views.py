@@ -48,21 +48,41 @@ def new_tag(request):
     return render(request, 'etergrams/new_tag.html', context)
 
 
-def new_entry(request, tag_id):
-    """add a new entry to a particular tag"""
-    tag = Tag.objects.get(id=tag_id)
+# def new_entry(request, tag_id):
+#     """add a new entry to a particular tag"""
+#     tag = Tag.objects.get(id=tag_id)
+#
+#     if request.method != 'POST':
+#         form = EntryForm()
+#     else:
+#         form = EntryForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             new_entry = form.save(commit=False)
+#             new_entry.tag = tag
+#             #m = ExampleModel.objects.get(pk=course_id)
+#             #new_entry.model_pic = form.cleaned_data['image']
+#             new_entry.save()
+#             return HttpResponseRedirect(reverse('etergrams:tag', args=[tag_id]))
+#
+#     context = {'tag': tag, 'form': form}
+#     return render(request, 'etergrams/new_entry.html', context)
 
-    if request.method != 'POST':
+def new_entry(request):
+    """add a new entry to some tags"""
+    #tags = Entry.tag.all()
+    tags = []
+    if request.method != "POST":
         form = EntryForm()
     else:
-        form = EntryForm(request.POST, request.FILES)
+        form = EntryForm(request.POST, request.FILES, request.POST)
         if form.is_valid():
+            tags = Entry.tag.all()
+            #tags = .tag.all()
             new_entry = form.save(commit=False)
-            new_entry.tag = tag
-            #m = ExampleModel.objects.get(pk=course_id)
-            #new_entry.model_pic = form.cleaned_data['image']
+            #new_entry.tag = tags
             new_entry.save()
-            return HttpResponseRedirect(reverse('etergrams:tag', args=[tag_id]))
+            return HttpResponseRedirect(reverse('etergrams:tags'))
 
-    context = {'tag': tag, 'form': form}
+    #context = {'tag': tag, 'form': form}
+    context = {'form': form, 'tag': tag}
     return render(request, 'etergrams/new_entry.html', context)

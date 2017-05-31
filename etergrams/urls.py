@@ -19,7 +19,12 @@ urlpatterns = [
     url(r'^new_tag/$', views.new_tag, name='new_tag'),
 
     #page for adding new entries
-    url(r'^new_entry/(?P<tag_id>\d+)/$', views.new_entry, name='new_entry'),
+    #deprecated, dependent on a single tag, should not have created this
+    #url(r'^new_entry/(?P<tag_id>\d+)/$', views.new_entry, name='new_entry'),
+
+    #current page for adding new entries
+    url(r'^new_entry/$', views.new_entry, name='new_entry'),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

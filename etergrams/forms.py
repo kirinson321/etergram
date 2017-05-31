@@ -13,6 +13,6 @@ class TagForm(forms.ModelForm):
 class EntryForm(forms.ModelForm):
     class Meta:
         model = Entry
-        fields = ['text', 'photo']
-        labels = {'text': ''}#, 'photo': 'select a file'}
+        fields = ['text', 'photo', 'tag']
+        labels = {'text': ''}
         widgets = {'text': forms.Textarea(attrs={'cols': 80})}
