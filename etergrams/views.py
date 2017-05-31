@@ -69,20 +69,24 @@ def new_tag(request):
 
 def new_entry(request):
     """add a new entry to some tags"""
-    #tags = Entry.tag.all()
-    tags = []
     if request.method != "POST":
         form = EntryForm()
     else:
         form = EntryForm(request.POST, request.FILES, request.POST)
         if form.is_valid():
-            tags = Entry.tag.all()
-            #tags = .tag.all()
             new_entry = form.save(commit=False)
-            #new_entry.tag = tags
+            #id = new_entry.tag.all()
+            #tags = new_entry.tag.all()
+            #new_entry.save(commit=False)
+            #tags = new_entry.tag.all()
+            new_entry.save()
+            for each in new_entry.tag.all():
+                tags = Tag(text = each.lower())
+                tags.save()
+                new_entry.tag.add(tags)
             new_entry.save()
             return HttpResponseRedirect(reverse('etergrams:tags'))
 
-    #context = {'tag': tag, 'form': form}
-    context = {'form': form, 'tag': tag}
+    context = {'tag': tag, 'form': form}
+    #context = {'form': form, 'tag': tag}
     return render(request, 'etergrams/new_entry.html', context)

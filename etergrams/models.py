@@ -29,3 +29,8 @@ class Entry(models.Model):
             return self.text[:50] + "..."
         else:
             return self.text
+
+    # def save(self, *args, **kwargs):
+    #     for tag in self.tag:
+    #         print (tag.name)
+    #     super(Entry, self).save(*args, **kwargs)
