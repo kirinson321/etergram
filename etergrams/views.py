@@ -1,9 +1,16 @@
 from django.shortcuts import render
+from django.conf import settings
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from django.core.files.storage import FileSystemStorage
+
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 from .models import Tag
 from .forms import TagForm
+from .models import Entry
+from .forms import EntryForm
 
 # Create your views here.
 
@@ -22,7 +29,7 @@ def tags(request):
 def tag(request, tag_id):
     """show all entries for a single tag"""
     tag = Tag.objects.get(id=tag_id)
-    entries = tag.entry_set.all()#('-date_added')
+    entries = tag.entry_set.order_by('-date_added')
     context = {'tag': tag, 'entries': entries}
     return render(request, 'etergrams/tag.html', context)
 
@@ -39,3 +46,23 @@ def new_tag(request):
 
     context = {'form': form}
     return render(request, 'etergrams/new_tag.html', context)
+
+#damn, this one below took me a full day to work out; had to bite into POST requests for it to fully working
+def new_entry(request):
+    """add a new entry to some tags"""
+    if request.method != "POST":
+        form = EntryForm()
+    else:
+        form = EntryForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_entry = form.save(commit=False)
+            new_entry.save()
+            tags = request.POST.getlist('tag', '')
+            for each in tags:
+                new_entry.tag.add(each)
+                new_entry.save()
+            new_entry.save()
+            return HttpResponseRedirect(reverse('etergrams:tags'))
+
+    context = {'tag': tag, 'form': form}
+    return render(request, 'etergrams/new_entry.html', context)

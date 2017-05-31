@@ -16,9 +16,9 @@ class Tag(models.Model):
 class Entry(models.Model):
     """entry containing a photo and a description"""
     text = models.TextField()
-    photo = models.ImageField(upload_to='photos/', default='/home/marcin/Desktop/python/projects/etergram/media/photos/default.jpg')
-    date_added = models.DateTimeField(auto_now_add=True)
+    photo = models.ImageField(upload_to='photos', default='/photos/default.jpg')
     tag = models.ManyToManyField(Tag)
+    date_added = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name_plural = 'entries'

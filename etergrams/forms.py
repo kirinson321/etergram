@@ -1,6 +1,7 @@
 from django import forms
 from .models import Tag
-#from .models import Entry
+from .models import Entry
+
 
 class TagForm(forms.ModelForm):
     class Meta:
@@ -8,9 +9,10 @@ class TagForm(forms.ModelForm):
         fields = ['text']
         labels = {'text': ''}
 
-"""
+
 class EntryForm(forms.ModelForm):
     class Meta:
         model = Entry
-        fields = ['text']
-"""
+        fields = ['text', 'photo', 'tag']
+        labels = {'text': ''}
+        widgets = {'text': forms.Textarea(attrs={'cols': 80})}

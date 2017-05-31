@@ -5,11 +5,14 @@
 <p>Tag: {{ tag }}</p>
 
 <p>Entries:</p>
+
+
 <ul>
 {% for entry in entries %}
     <li>
         <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
         <p>{{ entry.text|linebreaks }}</p>
+        <p><img src={{ entry.photo.url }}></p>
     </li>
 
 {% empty %}
