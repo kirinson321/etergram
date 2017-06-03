@@ -10,9 +10,12 @@
 <ul>
 {% for entry in entries %}
     <li>
-        <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
+        <p>{{ entry.date_added|date:'M d, Y H:i' }}; <a href="{% url 'etergrams:edit_entry' entry.id %}">Edit entry</a></p>
         <p>{{ entry.text|linebreaks }}</p>
         <p><img src={{ entry.photo.url }}></p>
+        <p>
+
+        </p>
     </li>
 
 {% empty %}

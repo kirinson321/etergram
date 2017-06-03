@@ -25,6 +25,8 @@ urlpatterns = [
     #current page for adding new entries
     url(r'^new_entry/$', views.new_entry, name='new_entry'),
 
+    #page for editing a single entry
+    url(r'^edit_entry/(?P<entry_id>\d+)/$', views.edit_entry, name='edit_entry'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
