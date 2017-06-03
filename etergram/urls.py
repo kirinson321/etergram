@@ -23,5 +23,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^users/', include('users.urls', namespace='users')),
     url(r'', include('etergrams.urls', namespace='etergrams')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
