@@ -12,4 +12,7 @@ urlpatterns = [
     #logout page
     url(r'^logout/$', views.logout_view, name='logout'),
 
+    #registration page
+    url(r'^register/$', views.register, name='register'),
+
 ]
