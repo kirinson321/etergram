@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -19,6 +19,7 @@ class Entry(models.Model):
     photo = models.ImageField(upload_to='photos', default='/photos/default.jpg')
     tag = models.ManyToManyField(Tag)
     date_added = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User)
 
     class Meta:
         verbose_name_plural = 'entries'

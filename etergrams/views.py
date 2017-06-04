@@ -3,8 +3,9 @@ from django.conf import settings
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.core.files.storage import FileSystemStorage
+from django.contrib.auth.decorators import login_required
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 
 from .models import Tag
@@ -33,7 +34,7 @@ def tag(request, tag_id):
     context = {'tag': tag, 'entries': entries}
     return render(request, 'etergrams/tag.html', context)
 
-
+@login_required
 def new_tag(request):
     """add a new tag"""
     if request.method != 'POST':
@@ -48,6 +49,7 @@ def new_tag(request):
     return render(request, 'etergrams/new_tag.html', context)
 
 #damn, this one below took me a full day to work out; had to bite into POST requests for it to fully working
+@login_required
 def new_entry(request):
     """add a new entry to some tags"""
     if request.method != "POST":
@@ -56,6 +58,7 @@ def new_entry(request):
         form = EntryForm(request.POST, request.FILES)
         if form.is_valid():
             new_entry = form.save(commit=False)
+            new_entry.owner = request.user
             new_entry.save()
             tags = request.POST.getlist('tag', '')
             for each in tags:
@@ -68,11 +71,14 @@ def new_entry(request):
     return render(request, 'etergrams/new_entry.html', context)
 
 
-
+@login_required
 def edit_entry(request, entry_id):
     """edit an existing entry"""
     entry = Entry.objects.get(id=entry_id)
-    #topic = entry.topic
+
+    if entry.owner != request.user:
+        raise Http404
+
 
     if request.method != "POST":
         form = EntryForm(instance=entry)
