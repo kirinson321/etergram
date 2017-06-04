@@ -1,6 +1,7 @@
 <p>
     <a href="{% url 'etergrams:index' %}">ETERGRAM</a>
     <a href="{% url 'etergrams:tags' %}">All tags</a>
+    <a href="{% url 'etergrams:users' %}">All users</a>
     <a href="{% url 'etergrams:new_entry' %}">Add new entry</a>
     {% if user.is_authenticated %}
         Henlo, {{ user.username }}

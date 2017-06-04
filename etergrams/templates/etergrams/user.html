@@ -1,26 +1,24 @@
-{% extends 'etergrams/base.html' %}
+{% extends "etergrams/base.html" %}
+
 
 {% block content %}
-
-<p>Tag: {{ tag }}</p>
-
-<p>Entries:</p>
+<p>User: {{ user1 }}</p>
 
 
+<p>Entries: <p>
 <ul>
 {% for entry in entries %}
     <li>
         <p>{{ entry.date_added|date:'M d, Y H:i' }}; <a href="{% url 'etergrams:edit_entry' entry.id %}">Edit entry</a></p>
         <p>{{ entry.text|linebreaks }}</p>
-        <p>Uploaded by: {{ entry.owner }}</p>
+        <p>{{ entry.owner }}</p>
         <p><img src={{ entry.photo.url }}></p>
     </li>
 
 {% empty %}
         <li>
-            There are no entries for this tag yet.
+            This user has not posted anything yet.
         </li>
-
 {% endfor %}
 </ul>
 

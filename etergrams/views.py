@@ -12,6 +12,7 @@ from .models import Tag
 from .forms import TagForm
 from .models import Entry
 from .forms import EntryForm
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -33,6 +34,21 @@ def tag(request, tag_id):
     entries = tag.entry_set.order_by('-date_added')
     context = {'tag': tag, 'entries': entries}
     return render(request, 'etergrams/tag.html', context)
+
+def users(request):
+    """show all users"""
+    users = User.objects.all()
+    context = {'users': users}
+    return render(request, 'etergrams/users.html', context)
+
+
+def user(request, user_id):
+    """show all entries of a specific user"""
+    user1 = User.objects.get(id=user_id)
+    entries = user1.entry_set.order_by('-date_added')
+    context = {'user1': user1, 'entries': entries}
+    return render(request, 'etergrams/user.html', context)
+
 
 @login_required
 def new_tag(request):
