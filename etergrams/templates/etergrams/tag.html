@@ -12,8 +12,14 @@
     <li>
         <p>{{ entry.date_added|date:'M d, Y H:i' }}; <a href="{% url 'etergrams:edit_entry' entry.id %}">Edit entry</a></p>
         <p>{{ entry.text|linebreaks }}</p>
-        <p>Uploaded by: {{ entry.owner }}</p>
-        <p><img src={{ entry.photo.url }}></p>
+        <p>Uploaded by: <a href="{% url 'etergrams:user' entry.owner.id %}">{{ entry.owner }}</a>;
+             Tags:
+            {% for each in entry.tag.all %}
+                <a href="{% url 'etergrams:tag' each.id %}">{{ each }}</a>
+            {% endfor %}
+        </p>
+        <p><a href={{ entry.photo.url }}><img src="{{ entry.photo.url }}" height="20%"></a></p>
+    </br>
     </li>
 
 {% empty %}

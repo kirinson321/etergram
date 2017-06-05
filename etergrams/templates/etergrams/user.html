@@ -2,7 +2,7 @@
 
 
 {% block content %}
-<p>User: {{ user1 }}</p>
+<p>Owner: {{ user1 }}</p>
 
 
 <p>Entries: <p>
@@ -11,8 +11,13 @@
     <li>
         <p>{{ entry.date_added|date:'M d, Y H:i' }}; <a href="{% url 'etergrams:edit_entry' entry.id %}">Edit entry</a></p>
         <p>{{ entry.text|linebreaks }}</p>
-        <p>{{ entry.owner }}</p>
-        <p><img src={{ entry.photo.url }}></p>
+        <p>Tags:
+        {% for each in entry.tag.all %}
+            <a href="{% url 'etergrams:tag' each.id %}">{{ each }}</a>
+        {% endfor %}
+        </p>
+        <p><a href={{ entry.photo.url }}><img src="{{ entry.photo.url }}" height="20%"></a></p>
+    </br>
     </li>
 
 {% empty %}

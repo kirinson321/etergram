@@ -46,7 +46,9 @@ def user(request, user_id):
     """show all entries of a specific user"""
     user1 = User.objects.get(id=user_id)
     entries = user1.entry_set.order_by('-date_added')
-    context = {'user1': user1, 'entries': entries}
+    for each in entries:
+        tags = each.tag.all()
+    context = {'user1': user1, 'entries': entries, 'tags': tags}
     return render(request, 'etergrams/user.html', context)
 
 
